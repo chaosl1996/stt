@@ -1,0 +1,42 @@
+{  
+  "name": "Fun ASR",  
+  "version": "1.0",  
+  "slug": "fun_asr",  
+  "description": "Fun ASR Addon for Home Assistant",  
+  "arch": ["amd64", "armhf", "armv7", "aarch64"],  // 根据你的Docker镜像支持的架构进行修改  
+  "startup": "always",  
+  "boot": "auto",  
+  "map": ["share:rw"],  // 如果需要访问共享文件夹，可以添加这里  
+  "options": {  
+    "port": "5001",  
+    "model_path": "/models"  // 映射到Docker容器内的路径  
+  },  
+  "schema": {  
+    "port": "int(5000,65535)",  
+    "model_path": "str"  
+  },  
+  "image": "yaming116/fun-asr:latest",  
+  "ports": {  
+    "5001/tcp": {  
+      "host": "5001",  
+      "container": 5001,  
+      "protocol": "tcp",  
+      "description": "Fun ASR Port"  
+    }  
+  },  
+  "volumes": [  
+    "/share/fun_asr:/models"  // 根据你的需要修改这里，例如使用/share目录作为共享存储  
+  ],  
+  "ports_description": {  
+    "5001/tcp": "Fun ASR Web Interface"  
+  },  
+  "host_network": false,  
+  "privileged": false,  
+  "apparmor": false,  
+  "devices": [],  
+  "full_access": false,  
+  "init": false,  
+  "stdin_open": true,  
+  "tty": true,  
+  "environment": {}  
+}
